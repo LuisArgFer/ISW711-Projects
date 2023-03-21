@@ -1,6 +1,7 @@
 import Usuario from "../models/Usuario.js";
 import generarId from "../helpers/generarId.js";
 import generarJWT from "../helpers/generarJWT.js";
+import Roles from "../models/Roles.js";
 import { emailRegistro, emailOlvidePassword } from "../helpers/email.js";
 
 const registrar = async (req, res) => {
@@ -16,6 +17,13 @@ const registrar = async (req, res) => {
   try {
     const usuario = new Usuario(req.body);
     usuario.token = generarId();
+    usuario.role_id = "6412339f0c629befbd6fe788";
+    // Buscamos el objeto del rol en la base de datos
+    const rolObj = await Roles.findById(usuario.role_id);
+    if (!rolObj) {
+      const error = new Error("Rol de usuario invalido");
+      return res.status(400).json({ msg: error.message });
+    }
     await usuario.save();
 
     // Enviar el email de confirmacion
