@@ -18,7 +18,8 @@ const newsSoursesSchema = mongoose.Schema(
       },
       user_id:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'Usuario',
+        required: true
       },
     },
     {

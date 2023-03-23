@@ -45,7 +45,6 @@ const autenticar = async (req, res) => {
   const { email, password } = req.body;
 
   // Comprobar si el usuario existe
-  console.log(email, password)
   const usuario = await Usuario.findOne({ email });
   if (!usuario) {
     const error = new Error("El Usuario no existe");
@@ -64,6 +63,7 @@ const autenticar = async (req, res) => {
       _id: usuario._id,
       nombre: usuario.nombre,
       email: usuario.email,
+      role: usuario.role_id,
       token: generarJWT(usuario._id),
     });
   } else {

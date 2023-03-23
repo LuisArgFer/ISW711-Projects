@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useCategory from "../hooks/useCategory";
 import "../paginas/CSS/Noticias.css";
 
 const Header = () => {
   const { cerrarSesionAuth, auth } = useAuth();
+  const { categorias } = useCategory();
 
   const handleCerrarSesion = () => {
     cerrarSesionAuth();
@@ -50,17 +52,18 @@ const Header = () => {
               <h3>Categorias</h3>
             </li>
             <li>
-              <Link href="/dashboard/categorias/:id">
-                <svg>
-                  <use xlinkHref="#pages"></use>
-                </svg>
-                <span>News</span>
-              </Link>
+              { categorias ? categorias.map((categorias) => (
+                <Link to={`/dashboard/categorias/${categorias.name}`} key={categorias._id}>
+                  <svg>
+                    <use xlinkHref="#users"></use>
+                  </svg>
+                  <span>{categorias.name}</span>
+                </Link>
+              )) : null}
             </li>
           </ul>
         </nav>
       </header>
-
     </>
   );
 };

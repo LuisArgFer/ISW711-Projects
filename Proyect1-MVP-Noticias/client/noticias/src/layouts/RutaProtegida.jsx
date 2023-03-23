@@ -9,13 +9,16 @@ const RutaProtegida = () => {
   return (
     <>
       {auth._id ? (
-        <div className="bg-gray-100">
+        <> 
+            <div className="bg-gray-100">
           <Header />
 
           <main className="p-10 flex-1 ">
             <Outlet />
           </main>
         </div>
+        </>
+    
       ) : (
         <Navigate to="/login" />
       )}

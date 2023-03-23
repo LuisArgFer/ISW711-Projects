@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [alerta, setAlerta] = useState({});
 
-  const { setAuth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -33,7 +33,10 @@ const Login = () => {
       setAlerta({});
       localStorage.setItem("token", data.token);
       setAuth(data);
-      navigate("/dashboard");
+      if(!auth) return;
+      if (auth.role_id !== "641233bc0c629befbd6fe78b") navigate("/dashboard");
+      else navigate("/admin")
+
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
@@ -79,15 +82,17 @@ const Login = () => {
                     />
                     <i className="input-icon uil uil-lock-alt"></i>
                   </div>
-                  <input type="submit" value="Iniciar Sesión" className="btn mt-4">
-                    
-                  </input>
+                  <input
+                    type="submit"
+                    value="Iniciar Sesión"
+                    className="btn mt-4"
+                  ></input>
                   <p className="mb-0 mt-4 text-center">
                     <a href="#0" className="link">
                       Olvidaste tu contraseña?
                     </a>
                   </p>
-                 
+
                   <Link to="/registrarse" className="link">
                     No te has registrado?
                   </Link>
